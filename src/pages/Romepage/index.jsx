@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import WhiteBoard from "../../components/Whiteboard";
 import "./index.css";
 
 const Roompage = () => {
+  const canvasRef = useRef(null);
+  const ctxRef = useRef(null);
+
   const [tool, setTool] = useState("pencil");
   const [color, setColor] = useState("blank");
+  const [elements, setElements] = useState([]);
 
   return (
     <div className="row">
@@ -73,7 +77,13 @@ const Roompage = () => {
         </div>
       </div>
       <div className="col-md-10 mx-auto mt-4 canvas-box">
-        <WhiteBoard></WhiteBoard>
+        <WhiteBoard
+          canvasRef={canvasRef}
+          ctxRef={ctxRef}
+          elements={elements}
+          setElements={setElements}
+          tool={tool}
+        ></WhiteBoard>
       </div>
     </div>
   );
