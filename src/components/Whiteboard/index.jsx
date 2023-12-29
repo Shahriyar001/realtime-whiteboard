@@ -29,7 +29,16 @@ const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool }) => {
     }
 
     elements.forEach((element) => {
-      if (element.type === "pencil") {
+      if (element.type === "rect") {
+        roughCanvas.draw(
+          roughGenerator.rectangle(
+            element.offsetX,
+            element.offsetY,
+            element.width,
+            element.height
+          )
+        );
+      } else if (element.type === "pencil") {
         roughCanvas.linearPath(element.path);
       } else if (element.type === "line") {
         roughCanvas.draw(
@@ -70,6 +79,18 @@ const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool }) => {
           stroke: "black",
         },
       ]);
+    } else if (tool === "rect") {
+      setElements((prevElements) => [
+        ...prevElements,
+        {
+          type: "rect",
+          offsetX,
+          offsetY,
+          width: 0,
+          height: 0,
+          stroke: "black",
+        },
+      ]);
     }
 
     setIsDrawing(true);
@@ -101,6 +122,20 @@ const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool }) => {
                 ...ele,
                 width: offsetX,
                 height: offsetY,
+              };
+            } else {
+              return ele;
+            }
+          })
+        );
+      } else if (tool === "rect") {
+        setElements((prevElements) =>
+          prevElements.map((ele, index) => {
+            if (index === elements.length - 1) {
+              return {
+                ...ele,
+                width: offsetX - ele.offsetX,
+                height: offsetY - ele.offsetY,
               };
             } else {
               return ele;

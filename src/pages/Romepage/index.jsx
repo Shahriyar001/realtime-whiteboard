@@ -48,7 +48,7 @@ const Roompage = () => {
               type="radio"
               name="tool"
               id="rect"
-              checked={tool === "react"}
+              checked={tool === "rect"}
               value="rect"
               className="mt-1"
               onChange={(e) => setTool(e.target.value)}
