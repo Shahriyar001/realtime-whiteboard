@@ -4,7 +4,14 @@ import { RoughGenerator } from "roughjs/bin/generator";
 
 const roughGenerator = rough.generator();
 
-const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool }) => {
+const WhiteBoard = ({
+  canvasRef,
+  ctxRef,
+  elements,
+  setElements,
+  tool,
+  color,
+}) => {
   const [isDrawing, setIsDrawing] = useState(false);
 
   useEffect(() => {
@@ -13,8 +20,16 @@ const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool }) => {
     canvas.width = window.innerWidth * 2;
     const ctx = canvas.getContext("2d");
 
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+
     ctxRef.current = ctx;
   }, []);
+
+  useEffect(() => {
+    ctxRef.current.strokeStyle = color;
+  }, [color]);
 
   useLayoutEffect(() => {
     const roughCanvas = rough.canvas(canvasRef.current);
