@@ -50,18 +50,32 @@ const WhiteBoard = ({
             element.offsetX,
             element.offsetY,
             element.width,
-            element.height
+            element.height,
+            {
+              stroke: element.stroke,
+              strokeWidth: 5,
+              roughness: 0,
+            }
           )
         );
       } else if (element.type === "pencil") {
-        roughCanvas.linearPath(element.path);
+        roughCanvas.linearPath(element.path, {
+          stroke: element.stroke,
+          strokeWidth: 5,
+          roughness: 0,
+        });
       } else if (element.type === "line") {
         roughCanvas.draw(
           roughGenerator.line(
             element.offsetX,
             element.offsetY,
             element.width,
-            element.height
+            element.height,
+            {
+              stroke: element.stroke,
+              strokeWidth: 5,
+              roughness: 0,
+            }
           )
         );
       }
@@ -70,6 +84,7 @@ const WhiteBoard = ({
 
   const handleMouseDown = (e) => {
     const { offsetX, offsetY } = e.nativeEvent;
+    const currentColor = color;
 
     if (tool === "pencil") {
       setElements((prevElements) => [
@@ -79,7 +94,7 @@ const WhiteBoard = ({
           offsetX,
           offsetY,
           path: [[offsetX, offsetY]],
-          stroke: "black",
+          stroke: currentColor,
         },
       ]);
     } else if (tool === "line") {
@@ -91,7 +106,7 @@ const WhiteBoard = ({
           offsetY,
           width: offsetX,
           height: offsetY,
-          stroke: "black",
+          stroke: currentColor,
         },
       ]);
     } else if (tool === "rect") {
@@ -103,7 +118,7 @@ const WhiteBoard = ({
           offsetY,
           width: 0,
           height: 0,
-          stroke: "black",
+          stroke: currentColor,
         },
       ]);
     }
