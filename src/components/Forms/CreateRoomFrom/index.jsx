@@ -2,6 +2,21 @@ import { useState } from "react";
 
 const CreateRoomForm = ({ uuid }) => {
   const [roomId, setRoomId] = useState(uuid());
+  const [name, setName] = useState("");
+
+  const handleCreateRoom = (e) => {
+    e.preventDefault();
+
+    const roomData = {
+      name,
+      roomId,
+      userId: uuid(),
+      host: true,
+      presenter: true,
+    };
+
+    console.log(roomData);
+  };
 
   return (
     <form className="form col-md-12 mt-5">
@@ -10,6 +25,8 @@ const CreateRoomForm = ({ uuid }) => {
           type="text"
           className="form-control my-2"
           placeholder="Enter Your Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
       <div className="form-group border ">
@@ -35,6 +52,7 @@ const CreateRoomForm = ({ uuid }) => {
       </div>
       <button
         type="submit"
+        onClick={handleCreateRoom}
         className="mt-4 btn btn-primary btn-block form-control"
       >
         Generate Room
