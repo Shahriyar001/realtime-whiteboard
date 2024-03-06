@@ -2,22 +2,12 @@ import "./App.css";
 import Forms from "./components/Forms";
 import { Route, Routes } from "react-router-dom";
 import Roompage from "./pages/Romepage";
-import { io } from "socket.io-client";
-import { useState } from "react";
+import io from "socket.io-client";
+import { useEffect, useState } from "react";
 
-// const server = "http://localhost:5000/";
-// const connectionOptions = {
-//   "force new connections": true,
-//   reconnectionAttempts: "infinity",
-//   timeout: 10000,
-//   transports: ["websocket"]
-// }
-
-// const socket = io(server, connectionOptions);
-
-const server = "http://localhost:5000";
+const server = "http://localhost:5000/";
 const connectionOptions = {
-  "force new connection": true,
+  "force new connections": true,
   reconnectionAttempts: "Infinity",
   timeout: 10000,
   transports: ["websocket"],
@@ -25,8 +15,30 @@ const connectionOptions = {
 
 const socket = io(server, connectionOptions);
 
+// const server = "http://localhost:5000/";
+// const connectionOptions = {
+//   "force new connection": true,
+//   reconnectionAttempts: "Infinity",
+//   timeout: 10000,
+//   transports: ["websocket"],
+// };
+
+// const socket = io(server, connectionOptions);
+
 const App = () => {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    socket.on("userIsJoined", (data) => {
+      if (data.success) {
+        console.log("userJoined");
+      } else {
+        console.log("userJoined error");
+      }
+    });
+  }, []);
+
+  console.log(socket.emit);
 
   const uuid = () => {
     let S4 = () => {
