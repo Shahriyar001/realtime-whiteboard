@@ -2,8 +2,32 @@ import "./App.css";
 import Forms from "./components/Forms";
 import { Route, Routes } from "react-router-dom";
 import Roompage from "./pages/Romepage";
+import { io } from "socket.io-client";
+import { useState } from "react";
+
+// const server = "http://localhost:5000/";
+// const connectionOptions = {
+//   "force new connections": true,
+//   reconnectionAttempts: "infinity",
+//   timeout: 10000,
+//   transports: ["websocket"]
+// }
+
+// const socket = io(server, connectionOptions);
+
+const server = "http://localhost:5000";
+const connectionOptions = {
+  "force new connection": true,
+  reconnectionAttempts: "Infinity",
+  timeout: 10000,
+  transports: ["websocket"],
+};
+
+const socket = io(server, connectionOptions);
 
 const App = () => {
+  const [user, setUser] = useState(null);
+
   const uuid = () => {
     let S4 = () => {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -27,7 +51,10 @@ const App = () => {
   return (
     <div className="container">
       <Routes>
-        <Route path="/" element={<Forms uuid={uuid} />} />
+        <Route
+          path="/"
+          element={<Forms uuid={uuid} socket={socket} setUser={setUser} />}
+        />
         <Route path="/:roomId" element={<Roompage />} />
       </Routes>
     </div>

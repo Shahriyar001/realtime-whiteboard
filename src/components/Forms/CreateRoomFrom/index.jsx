@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CreateRoomForm = ({ uuid }) => {
+const CreateRoomForm = ({ uuid, socket, setUser }) => {
   const [roomId, setRoomId] = useState(uuid());
   const [name, setName] = useState("");
 
@@ -15,7 +15,8 @@ const CreateRoomForm = ({ uuid }) => {
       presenter: true,
     };
 
-    console.log(roomData);
+    setUser(roomData);
+    socket.emit("userJoined", roomData);
   };
 
   return (
