@@ -132,6 +132,7 @@ const Roompage = ({ user }) => {
           setElements={setElements}
           color={color}
           tool={tool}
+          user={user}
         ></WhiteBoard>
       </div>
     </div>
