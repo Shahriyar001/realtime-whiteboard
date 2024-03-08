@@ -3,7 +3,7 @@ import WhiteBoard from "../../components/Whiteboard";
 import "./index.css";
 // import { preview } from "vite";
 
-const Roompage = ({ user }) => {
+const Roompage = ({ user, socket }) => {
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
 
@@ -133,6 +133,7 @@ const Roompage = ({ user }) => {
           color={color}
           tool={tool}
           user={user}
+          socket={socket}
         ></WhiteBoard>
       </div>
     </div>

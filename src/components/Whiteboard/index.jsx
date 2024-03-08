@@ -12,11 +12,19 @@ const WhiteBoard = ({
   tool,
   color,
   user,
+  socket,
 }) => {
+  const [img, setImg] = useState(null);
+
+  useEffect(() => {
+    socket.on("whiteBoarDataResponse", (data) => {
+      setImg(data.imgURL);
+    });
+  }, []);
   if (!user?.presenter) {
     return (
       <div className="border border-dark border-3 h-100 overflow-hidden">
-        <img src="" alt="ghjkl" className="w-100 h-100" />
+        <img src={img} alt="ghjkl" className="w-100 h-100" />
       </div>
     );
   }
@@ -90,6 +98,9 @@ const WhiteBoard = ({
           );
         }
       });
+
+      const canvasImage = canvasRef.current.toDataURL();
+      socket.emit("whiteboard", canvasImage);
     }
   }, [elements]);
 
